@@ -8,6 +8,7 @@ const jwtToken = require("jsonwebtoken");
 const userSchema = new mongoose.Schema({
   username: {
     type: String,
+    unique: true,
     required: [true, "Please Enter Your Username"],
     minLength: [4, "Name cannot be less than 4 chars"],
   },
@@ -48,9 +49,9 @@ userSchema.methods.resetPassword = function (){
 }
 
 userSchema.methods.getToken = function(){
-    const JWT_SECRET = "Jkjbsdf$%kjdskjl#@$kjhhbak"
+    // const JWT_SECRET = "Jkjbsdf$%kjdskjl#@$kjhhbak"
     const JWT_EXPIRE = "5d"
- 
-    return jwtToken.sign({id: this._id}, JWT_SECRET, {expiresIn: JWT_EXPIRE})
+    console.log(process.env.JWT_SECRET)
+    return jwtToken.sign({id: this._id}, process.env.JWT_SECRET, {expiresIn: JWT_EXPIRE})
 }
 module.exports = mongoose.model("User", userSchema)
