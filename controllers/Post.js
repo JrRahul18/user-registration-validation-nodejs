@@ -8,7 +8,7 @@ exports.createNewPost = CatchAsyncError(async (req, res, next) => {
   const userId = req.user.id;
   const post = await Post.create({ postUrl: postUrl, user: userId });
   await post.populate("user", "username email")
-  return res.status(201).json({ success: true, newPost: post });
+  return res.status(201).json({ success: true, newPost: post, message: "Post created successfully" });
 });
 
 exports.getAllPost = CatchAsyncError(async (req, res, next) =>{
